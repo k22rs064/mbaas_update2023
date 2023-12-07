@@ -106,16 +106,18 @@
         }
 
         function alldeleteData() {
-            UTdata.fetch()
+            UTdata.fetchAll()
                 .then(function(results) {
-                    return results.alldelete();
+                    // すべての結果を削除
+                    const deletePromises = results.map(result => result.delete());
+                    return Promise.all(deletePromises);
                 })
-                .then(function(results) {
+                .then(function() {
                     $("#display").removeClass();
                     $("#display").addClass("bg-success");
                     $("#display").html("alldelete success");
                 })
-                .cotch(function(error) {
+                .catch(function(error) {
                     $("#display").removeClass();
                     $("#display").addClass("bg-warning");
                     $("#display").html("delete fail:" + JSON.stringify(error));
@@ -147,37 +149,33 @@
     <h1 class="text-light bg-secondary">電卓</h1>
     <div>
         <input type="text" id="data" placeholder="数字">
-        <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
+        <a onclick="enterData()" class="btn btn-outline-secondary" role="button">入力</a>
     </div>
     <div>
         <a onclick="1" class="btn btn-outline-primary" role="buton">1</a>
         <a onclick="2" class="btn btn-outline-primary" role="buton">2</a>
         <a onclick="3" class="btn btn-outline-primary" role="buton">3</a>
-        <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">表示</a>
+        <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">表　示</a>
     </div>
-
     <div>
         <a onclick="4" class="btn btn-outline-primary" role="buton">4</a>
         <a onclick="5" class="btn btn-outline-primary" role="buton">5</a>
         <a onclick="6" class="btn btn-outline-primary" role="buton">6</a>
-        <a onclick="sortData()" class="btn btn-outline-secondary" role="button">足し算</a>
+        <a onclick="sortData()" class="btn btn-outline-primary" role="button">足し算</a>
     </div>
-
     <div>
         <a onclick="7" class="btn btn-outline-primary" role="buton">7</a>
         <a onclick="8" class="btn btn-outline-primary" role="buton">8</a>
         <a onclick="9" class="btn btn-outline-primary" role="buton">9</a>
         <a onclick="countData()" class="btn btn-outline-primary" role="button">引き算</a>
     </div>
-
     <div>
         <a onclick="0" class="btn btn-outline-primary" role="buton">0</a>
         <a onclick="deleteData()" class="btn btn-outline-secondary" role="buton">削除</a>
-        <a onclick="alldeleteData()" class="btn btn-outline-primary" role="buton">全て削除</a>
+        <a onclick="alldeleteData()" class="btn btn-outline-secondary" role="buton">全て削除</a>
     </div>
-
     <div>
-        <input type="text" id="update" placeholder="更新">
+        <input type="text" id="update" placeholder="数字">
         <a onclick="updateData()" class="btn btn-outline-secondary" role="button">更新</a>
     </div>
     <div id="display" class="text-light bg-info">
