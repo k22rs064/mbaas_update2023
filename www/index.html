@@ -142,6 +142,14 @@
                     $("#display").html("update fail:" + JSON.stringify(error));
                 })
         }
+
+        function 1() {
+            UTdata.fetch()
+            .then(function(results) {
+            let value = $("#updata").val();
+            $("#updata").val(value + 1);
+        })
+        }
     </script>
 </head>
 
@@ -152,7 +160,7 @@
         <a onclick="enterData()" class="btn btn-outline-secondary" role="button">入力</a>
     </div>
     <div>
-        <a onclick="1" class="btn btn-outline-primary" role="buton">1</a>
+        <a onclick="1()" class="btn btn-outline-primary" role="buton">1</a>
         <a onclick="2" class="btn btn-outline-primary" role="buton">2</a>
         <a onclick="3" class="btn btn-outline-primary" role="buton">3</a>
         <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">表　示</a>
