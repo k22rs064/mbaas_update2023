@@ -50,17 +50,21 @@
                 })
         }
 
-        function sortData() {
+        function addData() {
             UTdata.order(key, true).fetchAll()
                 .then(function(results) {
                     let msg = "";
+                    let sum = 0;
+
                     for (let i = 0; i < results.length; i++) {
-                        msg += results[i].get(key) + "<br>";
+                        let value = results[i].get(key);
+                        msg += value + "<br>";
+                        sum += value;
                     }
                     $("#display").removeClass();
                     $("#display").addClass("text-light");
                     $("#display").addClass("bg-primary");
-                    $("#display").html(msg);
+                    $("#display").html(msg + sum);
                 })
                 .catch(function(error) {
                     $("#display").removeClass();
@@ -69,17 +73,21 @@
                 })
         }
 
-        function countData() {
+        function subtractData() {
             UTdata.order(key, true).fetchAll()
                 .then(function(results) {
                     let msg = "";
+                    let sum = 0;
+
                     for (let i = 0; i < results.length; i++) {
-                        msg = results[i].get(key) + "<br>";
+                        let value = results[i].get(key);
+                        msg += value + "<br>";
+                        sum -= value;
                     }
                     $("#display").removeClass();
                     $("#display").addClass("text-light");
                     $("#display").addClass("bg-primary");
-                    $("#display").html(msg);
+                    $("#display").html(msg + sum);
                 })
                 .catch(function(error) {
                     $("#display").removeClass();
@@ -105,25 +113,6 @@
                 })
         }
 
-        function alldeleteData() {
-            UTdata.fetchAll()
-                .then(function(results) {
-                    // すべての結果を削除
-                    const deletePromises = results.map(result => result.delete());
-                    return Promise.all(deletePromises);
-                })
-                .then(function() {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-success");
-                    $("#display").html("alldelete success");
-                })
-                .catch(function(error) {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-warning");
-                    $("#display").html("delete fail:" + JSON.stringify(error));
-                })
-        }
-
         function updateData() {
             UTdata.fetch()
                 .then(function(results) {
@@ -141,14 +130,6 @@
                     $("#display").addClass("bg-warning");
                     $("#display").html("update fail:" + JSON.stringify(error));
                 })
-        }
-
-        function 1() {
-            UTdata.fetch()
-            .then(function(results) {
-            let value = $("#updata").val();
-            $("#updata").val(value + 1);
-        })
         }
     </script>
 </head>
@@ -169,13 +150,13 @@
         <a onclick="4" class="btn btn-outline-primary" role="buton">4</a>
         <a onclick="5" class="btn btn-outline-primary" role="buton">5</a>
         <a onclick="6" class="btn btn-outline-primary" role="buton">6</a>
-        <a onclick="sortData()" class="btn btn-outline-primary" role="button">足し算</a>
+        <a onclick="addData()" class="btn btn-outline-primary" role="button">足し算</a>
     </div>
     <div>
         <a onclick="7" class="btn btn-outline-primary" role="buton">7</a>
         <a onclick="8" class="btn btn-outline-primary" role="buton">8</a>
         <a onclick="9" class="btn btn-outline-primary" role="buton">9</a>
-        <a onclick="countData()" class="btn btn-outline-primary" role="button">引き算</a>
+        <a onclick="subtractData()" class="btn btn-outline-primary" role="button">引き算</a>
     </div>
     <div>
         <a onclick="0" class="btn btn-outline-primary" role="buton">0</a>
