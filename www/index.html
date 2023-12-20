@@ -85,13 +85,17 @@
 
                     for (let i = 0; i < results.length; i++) {
                         let value = results[i].get(key);
-                        msg += value + "<br>";
                         sum -= value;
                     }
+
                     $("#display").removeClass();
                     $("#display").addClass("text-light");
                     $("#display").addClass("bg-primary");
                     $("#display").html(msg + sum);
+                })
+
+            UTdata.each(function(fetchAll) {
+                    fetchAll.delete();
                 })
                 .catch(function(error) {
                     $("#display").removeClass();
@@ -118,22 +122,30 @@
         }
 
         function alldeleteData() {
-            UTdata.fetch()
+            function deleteNext() {
+            UTdata.fetchAll()
                 .then(function(results) {
-                    // 全てのデータを削除
-                    return NCMB.Object.destroyAll(results);
+                    if(results.length === 0) {
+                        $("#display").removeClass();
+                    return;
+                }
+
+                results[0].delete()
+                    .then(function() {
+                        deleteNext();
+                    })
                 })
-                .then(function() {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-success");
-                    $("#display").html("delete success");
-                })
-                .catch(function(error) {
+
+                .cotch(function(error) {
                     $("#display").removeClass();
                     $("#display").addClass("bg-warning");
                     $("#display").html("delete fail:" + JSON.stringify(error));
                 });
         }
+        deleteNext();
+        }
+
+
 
 
         function updateData() {
