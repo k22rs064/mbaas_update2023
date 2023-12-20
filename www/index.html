@@ -77,33 +77,6 @@
                 })
         }
 
-        function subtractData() {
-            UTdata.order(key, true).fetchAll()
-                .then(function(results) {
-                    let msg = "";
-                    let sum = 0;
-
-                    for (let i = 0; i < results.length; i++) {
-                        let value = results[i].get(key);
-                        sum -= value;
-                    }
-
-                    $("#display").removeClass();
-                    $("#display").addClass("text-light");
-                    $("#display").addClass("bg-primary");
-                    $("#display").html(msg + sum);
-                })
-
-            UTdata.each(function(fetchAll) {
-                    fetchAll.delete();
-                })
-                .catch(function(error) {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-warning");
-                    $("#display").html("delete fail:" + JSON.stringify(error));
-                })
-        }
-
         function deleteData() {
             UTdata.fetch()
                 .then(function(results) {
@@ -123,26 +96,27 @@
 
         function alldeleteData() {
             function deleteNext() {
-            UTdata.fetchAll()
-                .then(function(results) {
-                    if(results.length === 0) {
-                        $("#display").removeClass();
-                    return;
-                }
+                UTdata.fetchAll()
+                    .then(function(results) {
+                        if (results.length === 0) {
+                            $("#display").removeClass();
+                            return;
+                        }
 
-                results[0].delete()
-                    .then(function() {
-                        deleteNext();
+                        results[0].delete()
+                            .then(function() {
+                                deleteNext();
+                            })
                     })
-                })
+
 
                 .cotch(function(error) {
                     $("#display").removeClass();
                     $("#display").addClass("bg-warning");
                     $("#display").html("delete fail:" + JSON.stringify(error));
                 });
-        }
-        deleteNext();
+            }
+            deleteNext();
         }
 
 
@@ -178,7 +152,6 @@
     <div>
         <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">表　示</a>
         <a onclick="addData()" class="btn btn-outline-primary" role="button">足し算</a>
-        <a onclick="subtractData()" class="btn btn-outline-primary" role="button">引き算</a>
     </div>
     <div>
         <a onclick="deleteData()" class="btn btn-outline-secondary" role="buton">削除</a>
