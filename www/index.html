@@ -18,6 +18,7 @@
             let ncmb = new NCMB(appKey, clientKey);
             let UTdata = ncmb.DataStore("UpdateTest");
             let key = "score";
+            const db = "numberadd"
 
             function enterData() {
                 let uTdata = new UTdata();
@@ -174,6 +175,18 @@
                 role="button"
                 >足し算</a
             >
+            <label for = "numberadd">number:</label>
+            <select id = "numberadd">
+                <option value = "1">1</option>
+                <option value = "2">2</option>
+                <option value = "3">3</option>
+                <option value = "4">4</option>
+                <option value = "5">5</option>
+                <option value = "6">6</option>
+                <option value = "7">7</option>
+                <option value = "8">8</option>
+                <option value = "9">9</option>
+            </select>
         </div>
         <div>
             <a
